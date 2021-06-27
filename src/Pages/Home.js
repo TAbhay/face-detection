@@ -13,13 +13,14 @@ const Home = ()=>{
     const webcamRef = useRef(null);
     const [imgSrc, setImgSrc] = useState(null);
     const [imgDis,setImgDis] = useState(null);
-    const [box,setBox] = useState({}); 
+    const [box,setBox] = useState([]); 
     const [bxheight,setbxheight] = useState(0);
     const [bxwidth,setbxwidth] = useState(0);
     const [x,setX] = useState(0);
     const [y,setY] = useState(0);
     const [loaded,setLoaded] = useState(1);
     const [msg,setMsg] = useState("");
+    const [totalFace,setTotalFace] = useState(0);
     const videoConstraints = {
         frameRate: 60
     }
@@ -64,25 +65,37 @@ const Home = ()=>{
     app.models.predict("a403429f2ddf4b49b307e318f00e528b", imgDis)
     .then(response =>
     {   setLoaded(1);
-        const faceBox = response.outputs[0].data.regions[0].region_info.bounding_box;
+        var arrLength = response.outputs[0].data.regions.length;
+        var arrBox = [];
         
+        for(var i=0;i<arrLength;i++){
+        const faceBox = response.outputs[0].data.regions[i].region_info.bounding_box;
+        var  obj = {};
         if(window.innerWidth> 640 ){
-		setBox({
-			rightCol:(1-faceBox.right_col)*bxwidth+(window.innerWidth*0.6 -bxwidth)*0.5,
-			leftCol:x+bxwidth*faceBox.left_col,
-			topRow: y+bxheight*faceBox.top_row,
-			bottomRow:(1-faceBox.bottom_row)*bxheight+window.innerHeight*0.4+(window.innerHeight*0.6 - bxheight)*0.5,
-	        })
+		
+			obj.rightCol = (1-faceBox.right_col)*bxwidth+(window.innerWidth*0.6 -bxwidth)*0.5;
+			obj.leftCol = x+bxwidth*faceBox.left_col;
+			obj.topRow =  y+bxheight*faceBox.top_row;
+			obj.bottomRow = (1-faceBox.bottom_row)*bxheight+window.innerHeight*0.4+(window.innerHeight*0.6 - bxheight)*0.5;
+	       
            
 
         }else{
-            setBox({
-                rightCol:(1-faceBox.right_col)*bxwidth+(window.innerWidth -bxwidth)*0.5,
-                leftCol:x+bxwidth*faceBox.left_col,
-                topRow: y+bxheight*faceBox.top_row,
-                bottomRow:(1-faceBox.bottom_row)*bxheight+window.innerHeight*0.12+(window.innerHeight*0.6 - bxheight)*0.5,
-                })
+           
+                obj.rightCol = (1-faceBox.right_col)*bxwidth+(window.innerWidth -bxwidth)*0.5;
+                obj.leftCol = x+bxwidth*faceBox.left_col;
+                obj.topRow =  y+bxheight*faceBox.top_row;
+                obj.bottomRow = (1-faceBox.bottom_row)*bxheight+window.innerHeight*0.12+(window.innerHeight*0.6 - bxheight)*0.5;
+               
         }
+       
+        arrBox.push(obj);
+      }
+        console.log(box);
+        setBox(arrBox);
+        setTotalFace(arrLength);
+        console.log(box);
+
         setMsg("Hurrah !! Found Detective !!");
     },
     function(err) {
@@ -99,6 +112,8 @@ const Home = ()=>{
         setImgDis(null);
         setLoaded(1);  
         setMsg("");  
+        setBox([]);
+        setTotalFace(0);
     }
 
     return(
@@ -139,7 +154,9 @@ const Home = ()=>{
                   <FaceDetect isLoaded = {loaded} imgSrc={(imgSrc==null)?null:imgSrc} imageSize = {getImageSize} box = {box}  />
                    </div>
                    <div className="right-flex-bottom">
-                     <h3 style={{color:'white',margin:'auto auto'}}>{msg}</h3>
+                     <h4 style={{color:'white',margin:'auto auto'}}>{msg}</h4>
+                     <h4 style={{color:'white',margin:'auto auto'}}>Total Face: {totalFace}</h4>
+                     
                    </div>
                   
                   

@@ -24,10 +24,17 @@ const FaceDetect = (props) =>{
 		hwaccel: false,
 		position: 'absolute'
 	};
+    const boxes = props.box;
+	const renderRect = boxes.map((box) =>{
+       return(
+		<div className = "bounding-boxes" style ={ {top: box.topRow, bottom: box.bottomRow, left: box.leftCol, right: box.rightCol}}></div>
+	   );
+	});
+
     return(
 			<>
 				<img  id="img-result" onLoad = {props.imageSize} className = "" src = {props.imgSrc}   alt =""/>
-				<Loader loaded={props.isLoaded} options ={options} className="spinner"><div className = "bounding-boxes" style ={ {top: props.box.topRow, bottom: props.box.bottomRow, left: props.box.leftCol, right: props.box.rightCol}}></div></Loader>
+				<Loader loaded={props.isLoaded} options ={options} className="spinner">{renderRect}</Loader>
 			</>		
     );
 }
