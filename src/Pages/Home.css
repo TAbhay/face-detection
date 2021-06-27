@@ -1,0 +1,146 @@
+.parent{
+    position: relative;
+}
+.container{
+    display:flex;
+    flex-direction:row;
+    z-index: 1;
+}
+.container-options{
+    flex-direction:column;
+    width: 100%;
+    align-items:center;
+    text-align: center;
+
+}
+.flex-item-left {
+ height:100vh;
+ width:40vw;
+ background-color: transparent;
+ 
+
+}
+.flex-item-right{
+    height:100vh;
+    width:60vw;
+    background-color: transparent;
+   
+}
+.field{
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+    justify-content:space-evenly;
+    height:60vh;
+    width:100%;
+    background-color: transparent;
+}
+a{
+    text-decoration: none;
+}
+.options{
+     font-size: 1.5rem;
+     font-weight:bold;
+     width: 150px;
+     margin:8px;
+     padding: 2px;
+     border:2px solid #2291d1;
+     color:white;
+    border-radius: 2px 8px 2px 8px;
+    
+}
+.detect{
+    font-size:1.8rem;
+    color:rgb(114, 245, 75);
+}
+.capture{
+    font-size: 1.5rem;
+    font-weight:bold;
+    width: 150px;
+    height:40px;
+    background-color:transparent;
+    border:2px solid #2291d1;
+    color:white;
+    border-radius: 2px 8px 2px 8px;
+}
+video{
+    width: 80%;
+    height: 70%;
+}
+#fname{
+    height:40px;
+    width: 200px;
+    z-index: 2;
+    background-color: transparent;
+    color: white;
+   
+  }
+  .border-gradient {
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px; 
+  }
+  .border-gradient-purple {
+    border-image-source: linear-gradient(to left, #3aa4d5, #d53a9d);
+  
+  }
+  input#file-upload-button{
+      height:60px;
+  }
+  .container-options-right{
+      justify-content: space-around;
+      height:100%;
+  }
+  .right-flex{
+      height: 60%;
+      display:flex;
+      align-items: center;
+
+  }
+  .right-flex-bottom{
+    height:35%;
+    display:flex;
+    align-items: center;
+
+  }
+  .img-preview{
+      height:90%;
+      width: 75%;
+  }
+  .file-upload{
+      color:white;
+  }
+@media only screen and (max-width:640px){
+    .container{
+        flex-direction:column;
+    }
+    .flex-item-left {
+        height:50vh;
+        width:100vw;
+       }
+    .flex-item-right{
+           height:60vh;
+           width:100vw;
+    }
+    .container-options{
+        height:100%;
+    }
+    .field{
+        height:60%;
+    }
+    .options{
+        font-size: 1rem;
+        font-weight:bold;
+        width: 120px;
+        margin:2px;
+   }
+   .detect{
+       font-size:1rem;
+       color:rgb(114, 245, 75);
+   }
+   .capture{
+    font-size: 1rem;
+    width: 130px;
+    height: 30px;
+   }
+}
